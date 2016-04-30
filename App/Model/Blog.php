@@ -121,7 +121,7 @@ class Blog extends \Aqua\Db\Model
 
         return  \Aqua\Db\Connection::query($query, [
             'id' => $id,
-        ]);
+        ])->asArray();
     }
 
 

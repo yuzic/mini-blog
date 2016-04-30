@@ -168,13 +168,13 @@ class Index extends \Aqua\Base\Controller
                 throw new \Exception('Error get id new');
             }
 
-            $model  = (new \App\Model\News)->view($id)[0];
+            $model  = (new \App\Model\Blog)->getOne($id)[0];
         } catch (\Exception $e) {
             $notify['error']  =  $e->getMessage();
         }
 
         $this->render('view', [
-            'news' => $model,
+            'blog' => $model,
             'notify' => $notify
         ]);
 

@@ -3,19 +3,13 @@
 <table class="table" border="1px" width="100%">
         <tr>
             <td>
-                name:<br><?=Html::escape($message['name']);?>
-                <br>
-                author:<br><?=Html::escape($news['author']);?>
-                <br>
-                tags:
-                <?=Html::escape($news['tags']);?>
+                Title:<br><?=Html::escape($blog['title']);?>
                 <br>
                 text:
-                <?=Html::escape($news['text']);?>
-                <a href="/news/<?=$news['id'];?>"> More </a>
+                <?=Html::escape($blog['text']);?>
                 <br>
                 date:
-                <?=date('Y-m-d H:i:s', $news['created_at']);?>
+                <?=date('Y-m-d H:i:s', $blog['created_at']);?>
 
             </td>
 
