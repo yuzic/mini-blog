@@ -24,4 +24,8 @@ return [
         'pattern' => 'edit/:id',
         'action' => 'Index/edit',
     ],
+    [
+        'pattern' => 'delete/:id',
+        'action' => 'Index/delete',
+    ],
 ];

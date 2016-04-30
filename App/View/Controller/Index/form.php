@@ -11,8 +11,8 @@
 <?php } ?>
 <form method="post" id="contact-form" enctype="multipart/form-data" style="margin-left: 10px">
     <input type="hidden" name="blog" value="1">
-    <?php if (!isset($model['update'])) {?>
-        <input type="hidden" name="id" value="<?=$model['id'];?>">
+    <?php if (isset($post['id'])) {?>
+        <input type="hidden" name="id" value="<?=$post['id'];?>">
     <?php } ?>
 
     <div class="control-group">

@@ -70,8 +70,8 @@ class File
 
     }
 
-    public static function delete($path, $fileName)
+    public static function delete($imagePath)
     {
-        return unlink(self::getDocumenRoot().'/'.$path.$fileName);
+        return unlink(self::getDocumenRoot().'/'. $imagePath);
     }
 }

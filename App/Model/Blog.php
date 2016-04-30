@@ -9,7 +9,7 @@ class Blog extends \Aqua\Db\Model
     const PAGE_COUNT = 3;
 
     public $sortListAllow = [
-        'name',
+        'title',
         'created_at',
     ];
 
@@ -34,15 +34,12 @@ class Blog extends \Aqua\Db\Model
                     *
                 FROM blog
                 ORDER BY ' .$orderSql.'
+                LIMIT '.self::PAGE_COUNT.'
+                OFFSET '. $this->getOffset($page) .'
                 ';
 
-        $params = [
-            'limit' => self::PAGE_COUNT,
-            'offset'    => $this->getOffset($page),
-        ];
 
-
-        return  \Aqua\Db\Connection::query($query, $params)->asArray();
+        return  \Aqua\Db\Connection::query($query)->asArray();
     }
 
     /**
@@ -85,6 +82,18 @@ class Blog extends \Aqua\Db\Model
         return  \Aqua\Db\Connection::query($query, $params);
     }
 
+    public function update(array $params)
+    {
+        $query = 'UPDATE blog
+                  SET   title=:title,
+                        text=:text,
+                        image_path=:image_path,
+                        modify_at=:modify_at
+                  WHERE id=:id';
+
+        return  \Aqua\Db\Connection::query($query, $params);
+    }
+
     public function getCount()
     {
         $sql = "SELECT count(1) as `count`
@@ -99,6 +108,20 @@ class Blog extends \Aqua\Db\Model
         $page = ($page <=0) ? 1: $page;
 
         return  (self::PAGE_COUNT * ($page - 1));
+    }
+
+    /**
+     * Get One record
+     * @param $id
+     * @return array
+     */
+    public function delete($id)
+    {
+        $query = 'DELETE FROM blog WHERE id=:id';
+
+        return  \Aqua\Db\Connection::query($query, [
+            'id' => $id,
+        ]);
     }
 
 

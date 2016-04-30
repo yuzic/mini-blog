@@ -6,5 +6,8 @@
       "App\\": "App/",
       "Aqua\\": "Aqua/"
     }
+  },
+  "require": {
+    "phpunit/phpunit": "5.3.*"
   }
 }

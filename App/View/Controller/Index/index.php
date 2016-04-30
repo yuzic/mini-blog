@@ -1,5 +1,4 @@
 <?php  use \App\Base\Helper\Html;?>
-<?php  require "form_search.php"; ?>
 <br>
 <?php  require "paginator.php"; ?>
 <br>

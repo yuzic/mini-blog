@@ -1,4 +1,4 @@
-Sorting field
-<a href="/sort/?field=name&order=asc">Name (asc)</a>
-
-<a href="/sort/?field=created_at&order=asc">Date (asc)</a> |
+Sorting field:
+<a href="/sort/?field=title&order=asc">Title</a>
+|
+<a href="/sort/?field=created_at&order=asc">Date</a>

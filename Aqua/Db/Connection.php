@@ -13,13 +13,10 @@ class Connection
         if (self::$_instance) {
             return self::$_instance;
         }
+        $config = \Aqua\Aqua::getConfig();
 
-        $config = \Aqua\Base\Config\Manager::get('db');
-
-        extract ($config);
-      //  $connection_string = "host=$host port=$port dbname=$dbname user=$user password=$password";
         try {
-            self::$_instance = new \PDO("mysql:host={$host};dbname={$dbname}", $user, $password);
+            self::$_instance = new \PDO($config['dsn'], $config['user'], $config['password']);
         }
         catch (\Exception $e) {
             die ("BD connect error!: " . $e->getMessage() . "<br/>");

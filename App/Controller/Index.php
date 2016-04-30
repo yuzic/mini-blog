@@ -15,19 +15,13 @@ class Index extends \Aqua\Base\Controller
         $notify = ['error' => null, 'message' => null];
         $blog =  new \App\Model\Blog;
 
+        $blogList = [];
         try {
+
             if (Request::post('blog')) {
                 $this->saveForm();
             }
 
-
-        } catch (\Exception $e) {
-            $notify['error']  =  $e->getMessage();
-        }
-
-        $blogList = [];
-
-        try {
             if (!in_array($sortField, $blog->sortListAllow)) {
                 throw new \Exception('Error validate field');
             }
@@ -82,9 +76,8 @@ class Index extends \Aqua\Base\Controller
             'modify_at' => time(),
         ];
 
-        print_r($_POST);
-
         if ($id  = (int) Request::post('id')) {
+            unset($params['created_at']);
             $params['id'] = $id;
             $blog->update($params);
         } else {
@@ -94,32 +87,46 @@ class Index extends \Aqua\Base\Controller
             }
         }
 
-
-
         $notify['message'] = 'Post success add';
 
         unset($_POST);
     }
 
-    public function search()
+
+    public function delete($id = 1)
     {
+        $id = (int) $id;
         $notify = ['error' => null, 'message' => null];
         try {
-            $search = Request::post('search');
-            $field_name = Request::post('field_name');
 
-            $newsList = (new \App\Model\News)->search($field_name, $search);
+            if (!$id) {
+                throw new \Exception('Error get id post');
+            }
+            $blog = new \App\Model\Blog;
+            $model  = $blog->getOne($id)[0];
+
+            if (!isset($model['id'])) {
+                throw new \Exception('Is is not exist');
+            }
+
+            $delete  = $blog->delete($id);
+
+            if(!$delete) {
+                throw new \Exception('Cant\'t Delete post');
+            }
+
+            if(!File::delete($model['image_path'])) {
+                throw new \Exception('Cant\'t Delete file');
+            }
+
+            header('Location: /');
+            exit;
+
+
         } catch (\Exception $e) {
             $notify['error']  =  $e->getMessage();
         }
 
-        $this->render('index', [
-            'newsList' => $newsList,
-            'newsCount' => 10,
-            'pageCount' =>  100,
-            'page' =>  1,
-            'notify' => $notify
-        ]);
     }
 
     public function edit($id = 1)
@@ -165,7 +172,6 @@ class Index extends \Aqua\Base\Controller
         } catch (\Exception $e) {
             $notify['error']  =  $e->getMessage();
         }
-
 
         $this->render('view', [
             'news' => $model,
