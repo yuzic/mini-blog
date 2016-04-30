@@ -25,7 +25,12 @@ class Connection
         return self::instance ();
     }
 
-
+    /**
+     * For qeury
+     * @param $query
+     * @param array $params
+     * @return \Result
+     */
     public static function query ($query, $params = [])
     {
         try {
